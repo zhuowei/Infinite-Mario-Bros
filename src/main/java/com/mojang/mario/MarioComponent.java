@@ -5,6 +5,8 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.*;
 import java.util.Random;
 
@@ -16,7 +18,7 @@ import com.mojang.sonar.FakeSoundEngine;
 import com.mojang.sonar.SonarSoundEngine;
 
 
-public class MarioComponent extends JComponent implements Runnable, KeyListener, FocusListener
+public class MarioComponent extends JComponent implements Runnable, KeyListener, FocusListener, MouseListener
 {
     private static final long serialVersionUID = 739318775993206607L;
     public static final int TICKS_PER_SECOND = 24;
@@ -138,6 +140,7 @@ public class MarioComponent extends JComponent implements Runnable, KeyListener,
 
         addKeyListener(this);
         addFocusListener(this);
+        addMouseListener(this);
 
         toTitle();
         adjustFPS();
@@ -318,5 +321,21 @@ public class MarioComponent extends JComponent implements Runnable, KeyListener,
         int fps = 24;
         delay = (fps > 0) ? (fps >= 100) ? 0 : (1000 / fps) : 100;
 //        System.out.println("Delay: " + delay);
+    }
+    public void mouseClicked(MouseEvent e){
+    }
+    public void mouseEntered(MouseEvent e){
+    }
+    public void mouseExited(MouseEvent e){
+    }
+    public void mousePressed(MouseEvent e){
+	if(scene instanceof Clickable){
+		((Clickable)scene).mouseDown(e.getX(), e.getY());
+	}
+    }
+    public void mouseReleased(MouseEvent e){
+	if(scene instanceof Clickable){
+		((Clickable)scene).mouseUp(e.getX(), e.getY());
+	}
     }
 }

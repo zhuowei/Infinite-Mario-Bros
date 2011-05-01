@@ -13,7 +13,7 @@ import com.mojang.sonar.FixedSoundSource;
 import com.mojang.mario.level.*;
 
 
-public class LevelScene extends Scene implements SpriteContext
+public class LevelScene extends Scene implements SpriteContext, Clickable
 {
     private List<Sprite> sprites = new ArrayList<Sprite>();
     private List<Sprite> spritesToAdd = new ArrayList<Sprite>();
@@ -539,5 +539,11 @@ public class LevelScene extends Scene implements SpriteContext
         {
             sprite.bumpCheck(x, y);
         }
+    }
+    public void mouseDown(int x, int y){
+	System.out.println("Click: " + x + ", " + y);
+    }
+    public void mouseUp(int x, int y){
+	System.out.println("Up: " + x + ", " + y);
     }
 }
