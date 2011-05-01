@@ -41,6 +41,8 @@ public class LevelScene extends Scene implements SpriteContext, Clickable
     private MarioComponent renderer;
     private int levelType;
     private int levelDifficulty;
+    public boolean entryPortal = true;
+    public boolean[] portalInFlight = new boolean[2];
 
     public LevelScene(GraphicsConfiguration graphicsConfiguration, MarioComponent renderer, long seed, int levelDifficulty, int type)
     {
@@ -542,8 +544,19 @@ public class LevelScene extends Scene implements SpriteContext, Clickable
     }
     public void mouseDown(int x, int y){
 	System.out.println("Click: " + x + ", " + y);
+	firePortal(x, y);
+
     }
     public void mouseUp(int x, int y){
 	System.out.println("Up: " + x + ", " + y);
+    }
+    private void firePortal(int x, int y){
+	int type = (entryPortal? 0: 1);
+	if(portalInFlight[type]){
+		return;
+	}
+	entryPortal = !entryPortal;
+	addSprite(new PortalBullet(this, mario.x, mario.y, 2f, 0f, type));
+        portalInFlight[type]=true;
     }
 }
